@@ -68,6 +68,8 @@ namespace Forum_v1.Controllers
         }
 
 
+
+
         [Authorize]
         [HttpPost]
         public async Task<ActionResult> ChangeRegisterData(ChangeRegisterDataViewModel m)
@@ -104,6 +106,54 @@ namespace Forum_v1.Controllers
             }
 
             return View(m);
+        }
+
+        
+
+
+        // GET: /Manage/ChangePassword
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        
+
+
+        //
+        // POST: /Manage/ChangePassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await _userManager.ChangePasswordAsync(await _userManager.FindByNameAsync(User.Identity.Name), model.OldPassword, model.NewPassword);
+
+            if (result.Succeeded)
+            {
+                /*
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                if (user != null)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false, authenticationMethod: null );
+                }
+                */
+
+                await _signInManager.SignOutAsync();
+
+                return View("YourPasswordChanged");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Что-то пошло не так");
+            }
+
+            return View(model);
         }
     }
 }
