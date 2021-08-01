@@ -14,14 +14,14 @@ namespace Forum_v1.Models
         public string ClientName { set; get; }
         public string CompanyName { set; get; }
         public DateTime DateOfRegistration { set; get; }
+        public bool Ban { set; get; }
+
+        public ApplicationUser() 
+        {
+            DateOfRegistration = DateTime.Now;
+            Ban = false;       
+        }
     }
-
-
-
-
-
-
-
 
 
 

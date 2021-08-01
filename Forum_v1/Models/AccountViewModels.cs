@@ -37,7 +37,6 @@ namespace Forum_v1.Models
 
 
 
-
     public class LoginViewModel
     {
         [Required]
@@ -55,11 +54,5 @@ namespace Forum_v1.Models
 
         public string ReturnUrl { get; set; }
     }
-
-
-
-
-
-
 
 }

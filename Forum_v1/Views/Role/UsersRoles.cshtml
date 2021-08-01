@@ -1,0 +1,23 @@
+﻿
+@model List<string>
+
+@{
+    ViewBag.Title = "Роли текущего пользователя";
+}
+
+<h3>Роли, доступные на вашем аккаунте:</h3>
+
+<table class="table">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item</td>
+        </tr>
+    }
+</table>
+
+
+<div>
+    <a href="/Home/Index" class="btn btn-dark">Вернуться на главную страницу.</a>
+</div>

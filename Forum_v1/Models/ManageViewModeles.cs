@@ -20,6 +20,7 @@ namespace Forum_v1.Models
     }
 
 
+
     public class ChangeRegisterDataViewModel
     {
         [Required]

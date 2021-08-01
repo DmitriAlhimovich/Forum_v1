@@ -26,9 +26,30 @@ namespace Forum_v1.Controllers
 
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+            IdentityRole roleUser = await _roleManager.FindByNameAsync("user");
+
+            if (roleUser == null)
+            {
+                IdentityResult result = await _roleManager.CreateAsync(new IdentityRole
+                {
+                    Name = "user" 
+                });
+
+                if (result.Succeeded)
+                {
+                    return View();
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Что-то пошло не так");
+                }
+
+            }
+
             return View();
+
         }
 
 
@@ -44,6 +65,7 @@ namespace Forum_v1.Controllers
                 if (result.Succeeded)
                 {                    
                     await _signInManager.SignInAsync(user, false);
+                    await _userManager.AddToRoleAsync(user, "user");
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -96,8 +118,8 @@ namespace Forum_v1.Controllers
             return View(model);
         }
 
-                          
 
+        // Post: /Account/Logout
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
@@ -109,7 +131,17 @@ namespace Forum_v1.Controllers
 
 
 
- 
+        // Get: /Account/Log_Off
+        [Authorize]
+        public async Task<IActionResult> Log_Off()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+
         public IActionResult Delete() 
         {
             return View();        
