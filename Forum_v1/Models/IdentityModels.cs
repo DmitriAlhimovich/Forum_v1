@@ -30,7 +30,7 @@ namespace Forum_v1.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.EnsureCreated();  
+            //Database.EnsureCreated();  
         }
 
     }
