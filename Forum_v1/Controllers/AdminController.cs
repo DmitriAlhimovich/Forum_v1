@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Repository.Concrete;
 
 namespace Forum_v1.Controllers
 {
@@ -14,7 +15,7 @@ namespace Forum_v1.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        ApplicationDbContext db;
+        private readonly EFGenericRepository<BanEmail> _banRepo;
         
 
 
@@ -22,7 +23,7 @@ namespace Forum_v1.Controllers
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            db = new ApplicationDbContext(options);
+           _banRepo =new EFGenericRepository<BanEmail>( new ApplicationDbContext(options));
         }
 
 
@@ -284,9 +285,12 @@ namespace Forum_v1.Controllers
                 user.Ban = true;
                 await _userManager.UpdateAsync(user);
 
-                BanEmails banEmail = new BanEmails { Email = user.Email };
+                BanEmail banEmail = new BanEmail { Email = user.Email };
+                /*
                 db.BanEmails.Add(banEmail);
                 await db.SaveChangesAsync();
+                */
+                _banRepo.CreateAsync(banEmail);
 
                 return RedirectToAction("Index", "Admin");
             }
@@ -318,7 +322,7 @@ namespace Forum_v1.Controllers
         // GET: Admin
         public async Task<ActionResult> BanUsersList()
         {
-            return View(await db.BanEmails.ToListAsync());
+            return View(await _banRepo.GetAllAsync());
         }
 
 
@@ -336,13 +340,14 @@ namespace Forum_v1.Controllers
                 await _userManager.UpdateAsync(user);
             }
 
-
-            BanEmails banEmail = await db.BanEmails.FirstOrDefaultAsync(c => c.Email == email);
+            //BanEmail banEmail = await db.BanEmails.FirstOrDefaultAsync(c => c.Email == email);
+            IEnumerable<BanEmail> banEmailList = await _banRepo.GetAllAsync();
+            BanEmail banEmail = banEmailList.FirstOrDefault(c => c.Email == email);
 
             if (banEmail != null)
             {
-                db.BanEmails.Remove(banEmail);
-                await db.SaveChangesAsync();
+                _banRepo.RemoveAsync(banEmail);
+                //await db.SaveChangesAsync();
 
                 return RedirectToAction("BanUsersList");
             }

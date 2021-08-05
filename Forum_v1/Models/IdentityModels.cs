@@ -28,10 +28,10 @@ namespace Forum_v1.Models
 
 
     
-    public class BanEmails
+    public class BanEmail
     {
         public int Id { set; get; }
-        public string Email { set; get; }        
+        public string Email { set; get; }       
 
     }
     
@@ -39,7 +39,7 @@ namespace Forum_v1.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<BanEmails> BanEmails { set; get; }
+        public DbSet<BanEmail> BanEmails { set; get; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
