@@ -38,7 +38,7 @@ namespace Forum_v1
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddTransient< IGenericRepository<BanEmail>, EFGenericRepository<BanEmail> >();
+            services.AddTransient<IGenericRepository<BanEmail>, EFGenericRepository<BanEmail> >();
         }
 
 
