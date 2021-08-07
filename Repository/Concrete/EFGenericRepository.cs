@@ -40,24 +40,21 @@ namespace Repository.Concrete
 
 
 
-        public async void CreateAsync(TEntity item)
+        public async Task CreateAsync(TEntity item)
         {
-            using (ApplicationDbContext context = new ApplicationDbContext(new DbContextOptions <ApplicationDbContext>() )) // всеравно не работает
-            {
-                context.Set<TEntity>().Add(item);
-                await context.SaveChangesAsync();
-            }
+            _dbSet.Add(item);
+            await _context.SaveChangesAsync();
         }
 
 
-        public async void UpdateAsync(TEntity item)
+        public async Task UpdateAsync(TEntity item)
         {
             _context.Entry(item).State = EntityState.Modified;
             await  _context.SaveChangesAsync();
         }
 
 
-        public async void RemoveAsync(TEntity item)
+        public async Task RemoveAsync(TEntity item)
         {
             _dbSet.Remove(item);
             await _context.SaveChangesAsync();

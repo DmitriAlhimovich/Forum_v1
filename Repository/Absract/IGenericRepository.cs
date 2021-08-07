@@ -8,7 +8,7 @@ namespace Repository.Absract
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        void CreateAsync(TEntity item);
+        Task CreateAsync(TEntity item);
 
          Task<TEntity> FindByIdAsync(int id);
 
@@ -16,8 +16,8 @@ namespace Repository.Absract
 
         IEnumerable<TEntity> Get(Func<TEntity, bool> predicate);
 
-        void RemoveAsync(TEntity item);
+        Task RemoveAsync(TEntity item);
 
-        void UpdateAsync(TEntity item);
+        Task UpdateAsync(TEntity item);
     }
 }
