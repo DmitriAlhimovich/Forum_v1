@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Repository.Absract;
+using Repository.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,10 @@ namespace Repository.Concrete
 {
     public class EFGenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        DbContext _context;
+        ApplicationDbContext _context;
         DbSet<TEntity> _dbSet;
 
-        public EFGenericRepository(DbContext context)
+        public EFGenericRepository(ApplicationDbContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();

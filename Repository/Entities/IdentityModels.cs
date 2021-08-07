@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Forum_v1.Models
+namespace Repository.Entities
 {
     public class ApplicationUser : IdentityUser
     {
@@ -19,22 +16,22 @@ namespace Forum_v1.Models
         public DateTime DateOfRegistration { set; get; }
         public bool Ban { set; get; }
 
-        public ApplicationUser() 
+        public ApplicationUser()
         {
             DateOfRegistration = DateTime.Now;
-            Ban = false;       
+            Ban = false;
         }
     }
 
 
-    
+
     public class BanEmail
     {
         public int Id { set; get; }
-        public string Email { set; get; }       
+        public string Email { set; get; }
 
     }
-    
+
 
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -49,5 +46,4 @@ namespace Forum_v1.Models
         }
 
     }
-  
 }

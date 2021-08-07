@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Repository.Absract;
 using Repository.Concrete;
+using Repository.Entities;
 
 namespace Forum_v1.Controllers
 {
@@ -15,15 +17,15 @@ namespace Forum_v1.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly EFGenericRepository<BanEmail> _banRepo;
+        private readonly IGenericRepository<BanEmail> _banRepo;
         
 
 
-        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, DbContextOptions<ApplicationDbContext> options)
+        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IGenericRepository<BanEmail> banRepo)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-           _banRepo =new EFGenericRepository<BanEmail>( new ApplicationDbContext(options));
+            _banRepo = banRepo;
         }
 
 
