@@ -17,16 +17,17 @@ namespace Forum_v1.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IGenericRepository<BanEmail> _banRepo;
+        private readonly EFGenericRepository<BanEmail> _banRepo;
+
+
         
-
-
-        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IGenericRepository<BanEmail> banRepo)
+        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, DbContextOptions<ApplicationDbContext> options)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _banRepo = banRepo;
+            _banRepo = new EFGenericRepository<BanEmail>(new ApplicationDbContext(options));
         }
+        
 
 
 
