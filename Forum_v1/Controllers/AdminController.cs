@@ -17,8 +17,7 @@ namespace Forum_v1.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IGenericRepository<BanEmail> _banRepo;
-        //private readonly IBanEmailRepository _banRepo;
+        private readonly IGenericRepository<BanEmail> _banRepo;       
 
 
         /*
