@@ -42,8 +42,11 @@ namespace Repository.Concrete
 
         public async void CreateAsync(TEntity item)
         {
-            _dbSet.Add(item);
-            await _context.SaveChangesAsync();
+            using (ApplicationDbContext context = new ApplicationDbContext(new DbContextOptions <ApplicationDbContext>() )) // всеравно не работает
+            {
+                context.Set<TEntity>().Add(item);
+                await context.SaveChangesAsync();
+            }
         }
 
 

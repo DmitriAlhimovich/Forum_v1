@@ -39,6 +39,7 @@ namespace Repository.Entities
         public DbSet<BanEmail> BanEmails { set; get; }
 
 
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
