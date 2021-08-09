@@ -19,13 +19,16 @@ namespace Forum_v1.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-            
+        private readonly IGenericRepository<BanEmail> _banRepo;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole> roleManager, IGenericRepository<BanEmail> banRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _banRepo = banRepo;
         }
 
 
@@ -100,6 +103,25 @@ namespace Forum_v1.Controllers
         {
             if (ModelState.IsValid)
             {
+              IEnumerable<BanEmail> banEmails = await _banRepo.GetAllAsync();
+
+                bool ban = false;
+
+                foreach (var item in banEmails)
+                {
+                    if (item.Email == model.Email)
+                    {
+                        ban = true;
+                    }
+                }
+
+
+                if (ban == true)
+                {
+                    return RedirectToAction("YouhaveBan");
+                }
+
+
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
                 if (result.Succeeded)
@@ -165,6 +187,13 @@ namespace Forum_v1.Controllers
                 await _signInManager.SignOutAsync();
             }
             return RedirectToAction("Index", "Home");
+        }
+
+
+        [AllowAnonymous]
+        public ActionResult YouhaveBan()
+        {
+            return View();
         }
 
 

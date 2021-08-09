@@ -244,15 +244,22 @@ namespace Forum_v1.Controllers
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> FindByEmail(string email)
         {
-            ApplicationUser user = await _userManager.FindByEmailAsync(email);
-            if (user != null)
+            if (email != null)
             {
-                return RedirectToAction("Edit", "Admin", new { Id = user.Id });
+                ApplicationUser user = await _userManager.FindByEmailAsync(email);
+                if (user != null)
+                {
+                    return RedirectToAction("Edit", "Admin", new { Id = user.Id });
+                }
+                else
+                {
+                    return RedirectToAction("NoUserEmail", "Admin");
+                }
             }
-            else
+            else 
             {
-                return RedirectToAction("NoUserEmail", "Admin");
-            }
+               return  RedirectToAction("Index", "Admin");
+            }            
         }
 
 
@@ -261,6 +268,7 @@ namespace Forum_v1.Controllers
         {
             return View();
         }
+
 
 
 
@@ -282,16 +290,17 @@ namespace Forum_v1.Controllers
 
             if (user != null)
             {
+                if (user.Ban == true)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
 
                 user.Ban = true;
                 await _userManager.UpdateAsync(user);
 
                 BanEmail banEmail = new BanEmail { Email = user.Email };
-                /*
-                db.BanEmails.Add(banEmail);
-                await db.SaveChangesAsync();
-                */
-                _banRepo.CreateAsync(banEmail);
+
+                await _banRepo.CreateAsync(banEmail);
 
                 return RedirectToAction("Index", "Admin");
             }
@@ -347,8 +356,7 @@ namespace Forum_v1.Controllers
 
             if (banEmail != null)
             {
-                _banRepo.RemoveAsync(banEmail);
-                //await db.SaveChangesAsync();
+                await _banRepo.RemoveAsync(banEmail);
 
                 return RedirectToAction("BanUsersList");
             }
