@@ -30,5 +30,20 @@ namespace Forum.API.Controllers
         }
 
 
+        // GET api/users/email
+        [HttpGet("{email}")]
+        public async Task<ActionResult<ApplicationUser>> Get(string email)
+        {
+            ApplicationUser user = await _userManager.FindByNameAsync(email);
+
+            if (user == null) 
+            {
+                return NotFound();
+            }
+                
+            return new ObjectResult(user);
+        }
+
+
     }
 }
