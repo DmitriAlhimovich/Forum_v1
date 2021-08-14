@@ -39,7 +39,7 @@ namespace Forum_v1
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<IGenericRepository<BanEmail>, EFGenericRepository<BanEmail>>();
-            services.AddScoped<ApplicationDbContext>();
+            //services.AddScoped<ApplicationDbContext>();
 
         }
 

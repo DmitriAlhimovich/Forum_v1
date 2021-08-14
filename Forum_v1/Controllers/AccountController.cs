@@ -32,6 +32,7 @@ namespace Forum_v1.Controllers
         }
 
 
+        
         [HttpGet]
         public async Task<IActionResult> Register()
         {
@@ -58,7 +59,13 @@ namespace Forum_v1.Controllers
             return View();
 
         }
-
+        
+        /*
+        public IActionResult Register() 
+        {
+            return View();
+        }
+        */
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
