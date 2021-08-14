@@ -31,7 +31,7 @@ namespace Forum_v1.Controllers
             _banRepo = banRepo;
         }
 
-        /*
+        
         [HttpGet]
         public async Task<IActionResult> Register()
         {
@@ -59,14 +59,16 @@ namespace Forum_v1.Controllers
             return View();
 
         }
-        */
+        
 
 
-
+        /*
         public IActionResult Register() 
         {
             return View();
         }
+        */
+
 
 
 
@@ -82,7 +84,7 @@ namespace Forum_v1.Controllers
                 if (result.Succeeded)
                 {                    
                     await _signInManager.SignInAsync(user, false);
-                    //await _userManager.AddToRoleAsync(user, "user");
+                    await _userManager.AddToRoleAsync(user, "user");
                     return RedirectToAction("Index", "Home");
                 }
                 else
