@@ -290,12 +290,12 @@ namespace Forum_v1.Controllers
 
             if (user != null)
             {
-                if (user.Ban == true)
+                if (user.isBanned == true)
                 {
                     return RedirectToAction("Index", "Admin");
                 }
 
-                user.Ban = true;
+                user.isBanned = true;
                 await _userManager.UpdateAsync(user);
 
                 BanEmail banEmail = new BanEmail { Email = user.Email };
@@ -346,7 +346,7 @@ namespace Forum_v1.Controllers
 
             if (user != null)
             {
-                user.Ban = false;
+                user.isBanned = false;
                 await _userManager.UpdateAsync(user);
             }
 

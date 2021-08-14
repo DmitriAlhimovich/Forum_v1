@@ -31,10 +31,11 @@ namespace Forum_v1.Controllers
             _banRepo = banRepo;
         }
 
-
+        /*
         [HttpGet]
         public async Task<IActionResult> Register()
         {
+
             IdentityRole roleUser = await _roleManager.FindByNameAsync("user");
 
             if (roleUser == null)
@@ -58,6 +59,15 @@ namespace Forum_v1.Controllers
             return View();
 
         }
+        */
+
+
+
+        public IActionResult Register() 
+        {
+            return View();
+        }
+
 
 
         [HttpPost]
@@ -72,7 +82,7 @@ namespace Forum_v1.Controllers
                 if (result.Succeeded)
                 {                    
                     await _signInManager.SignInAsync(user, false);
-                    await _userManager.AddToRoleAsync(user, "user");
+                    //await _userManager.AddToRoleAsync(user, "user");
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -105,18 +115,18 @@ namespace Forum_v1.Controllers
             {
               IEnumerable<BanEmail> banEmails = await _banRepo.GetAllAsync();
 
-                bool ban = false;
+                bool isbanned = false;
 
                 foreach (var item in banEmails)
                 {
                     if (item.Email == model.Email)
                     {
-                        ban = true;
+                        isbanned = true;
                     }
                 }
 
 
-                if (ban == true)
+                if (isbanned == true)
                 {
                     return RedirectToAction("YouhaveBan");
                 }
