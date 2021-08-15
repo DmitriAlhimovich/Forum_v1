@@ -40,6 +40,8 @@ namespace Forum_v1
 
             services.AddScoped<IGenericRepository<BanEmail>, EFGenericRepository<BanEmail>>();
 
+            services.AddScoped<IGenericRepository<Topic>, EFGenericRepository<Topic>>();
+
             //services.AddScoped<ApplicationDbContext>();  when not commented unable co create and migrate BD 
 
         }
