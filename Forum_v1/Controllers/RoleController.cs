@@ -6,6 +6,7 @@ using Forum_v1.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Repository.Entities;
 
 namespace Forum_v1.Controllers
@@ -82,7 +83,7 @@ namespace Forum_v1.Controllers
             }
             else
             {
-                return RedirectToAction("WrongEmailToBecomeAdmin", "Roles");
+                return RedirectToAction("WrongEmailToBecomeAdmin", "Role");
             }
         }
 
