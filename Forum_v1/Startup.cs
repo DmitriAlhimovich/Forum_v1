@@ -21,7 +21,11 @@ namespace Forum_v1
     {
         public Startup(IConfiguration configuration)
         {
-           Configuration = configuration;          
+            var builder = new ConfigurationBuilder()
+               .AddJsonFile("AdminConfig.json", optional: true, reloadOnChange: true)
+              .AddConfiguration(configuration);
+
+            Configuration = builder.Build();                     
         }
 
         public IConfiguration Configuration { get; }
@@ -43,6 +47,8 @@ namespace Forum_v1
             services.AddScoped<IGenericRepository<Topic>, EFGenericRepository<Topic>>();
 
             //services.AddScoped<ApplicationDbContext>();  when not commented unable co create and migrate BD 
+
+            services.Configure<AdminSettings>(Configuration.GetSection(AdminSettings.Settings));
 
         }
 
