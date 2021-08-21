@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Forum_v1.Models;
+using Forum_v1.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +17,15 @@ namespace Forum_v1.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        
-        private readonly AdminSettings _options;
+
+        private IAdminConfigService _adminService;
 
 
-        public RoleController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IOptions<AdminSettings> options)
+        public RoleController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IAdminConfigService adminConfigService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _options = options.Value;
+            _adminService = adminConfigService;            
         }
 
 
@@ -59,7 +60,7 @@ namespace Forum_v1.Controllers
             ApplicationUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
 
-            if (user != null && user.Email == _options.adminEmail)
+            if (user != null && user.Email == _adminService.adminEmail)
             {
 
                 IdentityRole roleAdmin = await _roleManager.FindByNameAsync("admin");

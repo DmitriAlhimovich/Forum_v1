@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Repository.Entities;
 using Repository.Absract;
 using Repository.Concrete;
+using Forum_v1.Services;
 
 namespace Forum_v1
 {
@@ -49,6 +50,10 @@ namespace Forum_v1
             //services.AddScoped<ApplicationDbContext>();  when not commented unable co create and migrate BD 
 
             services.Configure<AdminSettings>(Configuration.GetSection(AdminSettings.Settings));
+
+            services.AddTransient<IAdminConfigService, AdminConfigService>();
+
+            services.AddTransient<AdminConfigService>();
 
         }
 
