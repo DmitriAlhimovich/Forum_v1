@@ -14,13 +14,18 @@ namespace Forum_v1.Controllers
     public class TopicController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IGenericRepository<Topic> _topicRepo;
+        private readonly ITopicRepository _topicRepo;
+        private readonly IGenericRepository<Message> _messageRepo;
+        
 
 
-        public TopicController(UserManager<ApplicationUser> userManager, IGenericRepository<Topic> topicRepo)
+
+
+        public TopicController(UserManager<ApplicationUser> userManager, ITopicRepository topicRepo, IGenericRepository<Message> messageRepo)
         {
             _userManager = userManager;
             _topicRepo = topicRepo;
+            _messageRepo = messageRepo;
         }
 
 
@@ -68,5 +73,50 @@ namespace Forum_v1.Controllers
             }
             return View(model);
         }
+
+
+
+ 
+        public async Task<IActionResult> EnterIntoTopic(int Id) 
+        {
+            return View(await _topicRepo.FindByIdWithIncludeMessagesAsync(Id));           
+        }
+
+
+
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreateNewMessage(string text, int topicId) 
+        {
+            ApplicationUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (user == null ) 
+            {
+                return RedirectToAction("Index", "Topic");
+            }
+
+            if (text == null)
+            {
+                return RedirectToAction("EnterIntoTopic", "Topic", new { Id = topicId});
+            }
+
+            Message mes = new Message()
+            {  
+                TopicId = topicId,
+                ApplicationUserId = user.Id,
+                Text=text,
+                UserName=user.Email
+            };
+
+            await _messageRepo.CreateAsync(mes);
+
+            return RedirectToAction("Index", "Topic");
+
+        }
+
+
+
+
     }
 }

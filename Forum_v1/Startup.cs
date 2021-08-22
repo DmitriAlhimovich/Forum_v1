@@ -43,9 +43,11 @@ namespace Forum_v1
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddScoped<IGenericRepository<BanEmail>, EFGenericRepository<BanEmail>>();
 
-            services.AddScoped<IGenericRepository<Topic>, EFGenericRepository<Topic>>();
+            services.AddScoped<IGenericRepository<BanEmail>, EFGenericRepository<BanEmail>>();
+            services.AddScoped<IGenericRepository<Message>, EFGenericRepository<Message>>();
+            services.AddScoped<ITopicRepository, EFTopicRepository>();
+
 
             //services.AddScoped<ApplicationDbContext>();  when not commented unable co create and migrate BD 
 

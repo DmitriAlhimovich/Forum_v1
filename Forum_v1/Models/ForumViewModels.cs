@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Forum_v1.Models
 {
@@ -15,6 +11,15 @@ namespace Forum_v1.Models
         [Required]
         [Display(Name = "Описание.")]
         public string TopicDescription { set; get; }
+
+    }
+
+
+    public class MessageCreateViewModel
+    {
+        [Required]
+        [Display(Name = "Сообщение")]
+        public string Text { set; get; }
 
     }
 }

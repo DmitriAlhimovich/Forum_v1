@@ -62,10 +62,11 @@ namespace Repository.Entities
 
         public string ApplicationUserId { set; get; }
         public ApplicationUser User { set; get; }
+        public string UserName { set; get; }
 
 
 
-        public string TopicId { set; get; }
+        public int TopicId { set; get; }
         public Topic Topic { set; get; }
 
 
