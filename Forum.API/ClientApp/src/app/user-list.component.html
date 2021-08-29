@@ -6,18 +6,22 @@
 
     <thead>
         <tr>
-            <td>Модель</td>
-            <td>Производитель</td>
-            <td>Цена</td>
+            <td>ClientName</td>
+            <td>CompanyName</td>
+            <td>DateOfRegistration</td>
+            <td>isBanned</td>
+            <td>isDelited</td>
             <td></td>
         </tr>
     </thead>
 
     <tbody>
-        <tr *ngFor="let p of products">
-            <td>{{p?.name}}</td>
-            <td>{{p?.company}}</td>
-            <td>{{p?.price}}</td>
+        <tr *ngFor="let p of users">
+            <td>{{p.ClientName}}</td>
+            <td>{{p.CompanyName}}</td>
+            <td>{{p.DateOfRegistration}}</td>
+            <td>isBanned</td>
+            <td>isDelited</td>
             <td>
                 <a [routerLink]="['edit', p.id]" class="btn btn-sm btn-primary">Изменить</a>
                 <button (click)="delete(p.id)" class="btn btn-sm btn-danger">Удалить</button>

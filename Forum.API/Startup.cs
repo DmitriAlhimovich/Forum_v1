@@ -64,13 +64,14 @@ namespace Forum.API
             {
                 app.UseDeveloperExceptionPage();
 
-                app.UseSwagger();
-                
+               // app.UseSwagger();
+               /* 
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Forum.API");
                     c.RoutePrefix = string.Empty;
                 });
+               */
             }
 
             app.UseStaticFiles();

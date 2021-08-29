@@ -8,21 +8,21 @@ import { Injectable } from '@angular/core';
 let DataService = class DataService {
     constructor(http) {
         this.http = http;
-        this.url = "/api/product";
+        this.url = "/API/Users";
     }
-    getProducts() {
+    getUsers() {
         return this.http.get(this.url);
     }
-    getProduct(id) {
+    getUserById(id) {
         return this.http.get(this.url + '/' + id);
     }
-    createProduct(product) {
-        return this.http.post(this.url, product);
+    createUser(user) {
+        return this.http.post(this.url, user);
     }
-    updateProduct(product) {
-        return this.http.put(this.url, product);
+    updateUser(user) {
+        return this.http.put(this.url, user);
     }
-    deleteProduct(id) {
+    deleteUser(id) {
         return this.http.delete(this.url + '/' + id);
     }
 };

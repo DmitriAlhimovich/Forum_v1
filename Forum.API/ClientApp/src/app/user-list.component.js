@@ -5,12 +5,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Component } from '@angular/core';
-let NotFoundComponent = class NotFoundComponent {
+let UserListComponent = class UserListComponent {
+    constructor(dataService) {
+        this.dataService = dataService;
+    }
+    ngOnInit() {
+        this.load();
+    }
+    load() {
+        this.dataService.getUsers().subscribe((data) => this.users = data);
+    }
+    delete(id) {
+        this.dataService.deleteUser(id).subscribe(data => this.load());
+    }
 };
-NotFoundComponent = __decorate([
+UserListComponent = __decorate([
     Component({
-        template: '<h2>Not Found</h2>'
+        templateUrl: './user-list.component.html'
     })
-], NotFoundComponent);
-export { NotFoundComponent };
-//# sourceMappingURL=not-found.component.js.map
+], UserListComponent);
+export { UserListComponent };
+//# sourceMappingURL=user-list.component.js.map
