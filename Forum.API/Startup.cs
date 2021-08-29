@@ -93,12 +93,14 @@ namespace Forum.API
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
             
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers(); // подключаем маршрутизацию на контроллеры
+                endpoints.MapControllers();
             });
         }
     }
