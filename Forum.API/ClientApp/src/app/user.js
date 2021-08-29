@@ -1,9 +1,9 @@
 export class User {
-    constructor(Id, ClientName, CompanyName, DateOfRegistration, isBanned, isDelited) {
-        this.Id = Id;
-        this.ClientName = ClientName;
-        this.CompanyName = CompanyName;
-        this.DateOfRegistration = DateOfRegistration;
+    constructor(id, clientName, companyName, dateOfRegistration, isBanned, isDelited) {
+        this.id = id;
+        this.clientName = clientName;
+        this.companyName = companyName;
+        this.dateOfRegistration = dateOfRegistration;
         this.isBanned = isBanned;
         this.isDelited = isDelited;
     }

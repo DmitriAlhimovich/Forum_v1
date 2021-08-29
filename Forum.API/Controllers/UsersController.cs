@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Forum.API.Models;
 
 namespace Forum.API.Controllers
 {
@@ -24,15 +25,33 @@ namespace Forum.API.Controllers
 
 
         [HttpGet]
-        public IEnumerable<ApplicationUser> Get()
+        public IEnumerable<UserTranferObject> Get()
         {
-            return _userManager.Users;
+            IEnumerable<ApplicationUser> userList = _userManager.Users;
+
+           List<UserTranferObject> userTransferList = new List<UserTranferObject>();
+
+            foreach (var user in userList)
+            {
+                UserTranferObject userTransferObj = new UserTranferObject{
+                    Id = user.Id.ToString(),
+                    ClientName = user.ClientName,
+                    CompanyName = user.CompanyName,
+                    DateOfRegistration = user.DateOfRegistration.ToString(), 
+                    isBanned = user.isBanned,
+                    isDelited = user.isDelited
+                };
+
+                userTransferList.Add(userTransferObj);            
+            }
+
+            return userTransferList;
         }
 
 
         // GET api/users/email
         [HttpGet("{email}")]
-        public async Task<ActionResult<ApplicationUser>> Get(string email)
+        public async Task<ActionResult<UserTranferObject>> Get(string email)
         {
             ApplicationUser user = await _userManager.FindByNameAsync(email);
 

@@ -2,15 +2,15 @@
 export class User {
     constructor(
 
-        public Id: string,
+        public id? : string,
 
-        public ClientName: string,
+        public clientName? : string,
 
-        public CompanyName: string,
+        public companyName? : string,
 
-        public DateOfRegistration: string,
+        public dateOfRegistration? : string,
 
-        public isBanned: boolean,
+        public isBanned : boolean,
 
-        public isDelited: boolean) { }
+        public isDelited : boolean) { }
 }
