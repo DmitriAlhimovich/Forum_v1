@@ -10,7 +10,7 @@ export class User {
 
         public dateOfRegistration? : string,
 
-        public isBanned : boolean,
+        public isBanned? : boolean,
 
-        public isDelited : boolean) { }
+        public isDelited? : boolean) { }
 }
