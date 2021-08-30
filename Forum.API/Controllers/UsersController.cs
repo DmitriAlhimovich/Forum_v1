@@ -10,8 +10,8 @@ using Forum.API.Models;
 
 namespace Forum.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/users")]
     public class UsersController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
