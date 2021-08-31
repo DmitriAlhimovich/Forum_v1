@@ -11,7 +11,7 @@ using Forum.API.Models;
 namespace Forum.API.Controllers
 {
     [ApiController]
-    [Route("api/users")]
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;

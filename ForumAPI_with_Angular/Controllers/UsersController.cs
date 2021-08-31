@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace ForumAPI_with_Angular.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
+    [ApiController]   
     public class UsersController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -37,6 +37,7 @@ namespace ForumAPI_with_Angular.Controllers
                     Id = user.Id.ToString(),
                     ClientName = user.ClientName,
                     CompanyName = user.CompanyName,
+                    Email = user.Email,
                     DateOfRegistration = user.DateOfRegistration.ToString(),
                     isBanned = user.isBanned,
                     isDelited = user.isDelited

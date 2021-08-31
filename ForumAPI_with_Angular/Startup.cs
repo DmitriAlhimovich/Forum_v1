@@ -43,6 +43,7 @@ namespace ForumAPI_with_Angular
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+           
         }
 
 
@@ -78,6 +79,8 @@ namespace ForumAPI_with_Angular
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
+
+         
 
             app.UseSpa(spa =>
             {
