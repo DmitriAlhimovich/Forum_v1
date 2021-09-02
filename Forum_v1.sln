@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forum.API", "Forum.API\Forum.API.csproj", "{2879EA25-B104-4266-99EA-9AE9DD1378D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumAPI_with_Angular", "ForumAPI_with_Angular\ForumAPI_with_Angular.csproj", "{07BC5B5C-E605-483A-8765-2E96164ACF37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForumAPI_with_Angular", "ForumAPI_with_Angular\ForumAPI_with_Angular.csproj", "{07BC5B5C-E605-483A-8765-2E96164ACF37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumAPI_with_Angular_v2", "ForumAPI_with_Angular_v2\ForumAPI_with_Angular_v2.csproj", "{D23AEA90-065F-4734-AB59-281867789069}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{07BC5B5C-E605-483A-8765-2E96164ACF37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07BC5B5C-E605-483A-8765-2E96164ACF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07BC5B5C-E605-483A-8765-2E96164ACF37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D23AEA90-065F-4734-AB59-281867789069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D23AEA90-065F-4734-AB59-281867789069}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D23AEA90-065F-4734-AB59-281867789069}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D23AEA90-065F-4734-AB59-281867789069}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
