@@ -17,6 +17,7 @@ export class DataService
     getUsers()
     {
         return this.http.get(this.url);
+        
     }
 
 
