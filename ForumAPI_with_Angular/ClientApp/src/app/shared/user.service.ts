@@ -17,7 +17,7 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  readonly _baseUrl = "https://localhost:44335//api/users";
+  readonly _baseUrl = "users";
 
   formData: User = new User();
 
