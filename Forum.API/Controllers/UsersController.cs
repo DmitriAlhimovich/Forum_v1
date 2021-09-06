@@ -10,18 +10,17 @@ using Forum.API.Models;
 
 namespace Forum.API.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
 
-        public UsersController(UserManager<ApplicationUser> userManager) 
+        public UsersController(UserManager<ApplicationUser> userManager)
         {
-            _userManager = userManager;      
+            _userManager = userManager;
         }
-
 
 
         [HttpGet]
@@ -29,24 +28,28 @@ namespace Forum.API.Controllers
         {
             IEnumerable<ApplicationUser> userList = _userManager.Users;
 
-           List<UserTranferObject> userTransferList = new List<UserTranferObject>();
+            List<UserTranferObject> userTransferList = new List<UserTranferObject>();
 
-            foreach (var user in userList)
+            foreach (ApplicationUser user in userList)
             {
-                UserTranferObject userTransferObj = new UserTranferObject{
+                UserTranferObject userTransferObj = new UserTranferObject
+                {
                     Id = user.Id.ToString(),
                     ClientName = user.ClientName,
                     CompanyName = user.CompanyName,
-                    DateOfRegistration = user.DateOfRegistration.ToString(), 
+                    Email = user.Email,
+                    DateOfRegistration = user.DateOfRegistration.ToString(),
                     isBanned = user.isBanned,
                     isDelited = user.isDelited
                 };
 
-                userTransferList.Add(userTransferObj);            
+                userTransferList.Add(userTransferObj);
             }
 
             return userTransferList;
         }
+
+
 
 
         // GET api/users/email
@@ -55,14 +58,12 @@ namespace Forum.API.Controllers
         {
             ApplicationUser user = await _userManager.FindByNameAsync(email);
 
-            if (user == null) 
+            if (user == null)
             {
                 return NotFound();
             }
-                
+
             return new ObjectResult(user);
         }
-
-
     }
 }

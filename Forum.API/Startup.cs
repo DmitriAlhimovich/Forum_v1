@@ -37,17 +37,12 @@ namespace Forum.API
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            /*
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Forum.API", Version = "v1" });
             });
-            */
             
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
             
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
@@ -66,7 +61,7 @@ namespace Forum.API
             {
                app.UseDeveloperExceptionPage();
 
-                /*
+                
                app.UseSwagger();
                
                 app.UseSwaggerUI(c =>
@@ -74,7 +69,7 @@ namespace Forum.API
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Forum.API");
                     c.RoutePrefix = string.Empty;
                 });
-               */
+              
             }
             else
             {
@@ -87,26 +82,15 @@ namespace Forum.API
 
             app.UseStaticFiles();
 
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-            
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
-            });            
+          
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
             });
         }
     }

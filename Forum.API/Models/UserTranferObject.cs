@@ -13,6 +13,8 @@ namespace Forum.API.Models
 
         public string CompanyName { set; get; }
 
+        public string Email { set; get; }
+
         public string DateOfRegistration { set; get; }
 
         public bool isBanned { set; get; }
