@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 let DataService = class DataService {
     constructor(http) {
         this.http = http;
-        this.url = "/api/users";
+        this.url = "api/users";
     }
     getUsers() {
         return this.http.get(this.url);

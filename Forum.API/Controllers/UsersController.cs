@@ -63,7 +63,20 @@ namespace Forum.API.Controllers
                 return NotFound();
             }
 
-            return new ObjectResult(user);
+
+            UserTranferObject userTransferObj = new UserTranferObject
+            {
+                Id = user.Id.ToString(),
+                ClientName = user.ClientName,
+                CompanyName = user.CompanyName,
+                Email = user.Email,
+                DateOfRegistration = user.DateOfRegistration.ToString(),
+                isBanned = user.isBanned,
+                isDelited = user.isDelited
+            };
+
+
+            return new ObjectResult(userTransferObj);
         }
     }
 }
