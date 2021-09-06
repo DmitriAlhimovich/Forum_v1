@@ -6,7 +6,7 @@ import { User } from './user';
 export class DataService
 {
 
-    private url = "/api/users";
+    private url = "api/users";
 
 
     constructor(private http: HttpClient)
