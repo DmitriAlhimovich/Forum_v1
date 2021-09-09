@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Forum_v1.Models;
+using Forum_v1.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Repository.Absract;
-using Repository.Concrete;
 using Repository.Entities;
 
 namespace Forum_v1.Controllers
@@ -17,16 +15,17 @@ namespace Forum_v1.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IGenericRepository<BanEmail> _banRepo;  
-        
+        private readonly IGenericRepository<BanEmail> _banRepo;
+        private readonly IAdminService _adminService;
 
-        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IGenericRepository<BanEmail> banRepo)
+        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IGenericRepository<BanEmail> banRepo, IAdminService adminService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _banRepo = banRepo;
+            _adminService = adminService;
         }
-        
+
 
 
 
@@ -36,9 +35,6 @@ namespace Forum_v1.Controllers
         {
             return View(_userManager.Users);
         }
-
-
-
 
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> Info(string Id)
@@ -64,7 +60,6 @@ namespace Forum_v1.Controllers
 
         }
 
-
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> Edit(string Id)
         {
@@ -84,7 +79,6 @@ namespace Forum_v1.Controllers
                 {
                     _availableroles.Add(r.Name);
                 }
-
 
                 AdminEdit model = new AdminEdit
                 {
@@ -106,9 +100,6 @@ namespace Forum_v1.Controllers
 
         }
 
-
-
-
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> AddRoleToUser(string Email, string Rolename)
         {
@@ -127,8 +118,6 @@ namespace Forum_v1.Controllers
             return RedirectToAction("Index");
         }
 
-
-
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> DeleteRoleFromUser(string Email, string Rolename)
         {
@@ -145,9 +134,7 @@ namespace Forum_v1.Controllers
             }
 
             return RedirectToAction("Index");
-
         }
-
 
         [Authorize(Roles = "admin")]
         [HttpGet]
@@ -155,7 +142,6 @@ namespace Forum_v1.Controllers
         {
             return View();
         }
-
 
         [Authorize(Roles = "admin")]
         [HttpPost]
@@ -171,7 +157,6 @@ namespace Forum_v1.Controllers
                 {
                     return RedirectToAction("AdminSelfDelete", "Account");
                 }
-                
 
                 user = await _userManager.FindByIdAsync(Id);
 
@@ -185,13 +170,9 @@ namespace Forum_v1.Controllers
                     }
                 }
 
-
             }
             return RedirectToAction("CantDeleteUser", new { name = user.Email });
-
         }
-
-
 
         [Authorize(Roles = "admin")]
         public string CantDeleteUser(string name)
@@ -199,17 +180,12 @@ namespace Forum_v1.Controllers
             return "Не могу удалить пользователя:  " + name + "  Что-то пошло не так!";
         }
 
-
-
-
         [Authorize(Roles = "admin")]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
-
-
 
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> Create(RegisterViewModel model)
@@ -219,7 +195,6 @@ namespace Forum_v1.Controllers
                 ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email, ClientName = model.ClientName, CompanyName = model.CompanyName };
 
                 IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-
 
                 if (result.Succeeded)
                 {
@@ -239,8 +214,6 @@ namespace Forum_v1.Controllers
             return View(model);
         }
 
-
-
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> FindByEmail(string email)
         {
@@ -256,21 +229,17 @@ namespace Forum_v1.Controllers
                     return RedirectToAction("NoUserEmail", "Admin");
                 }
             }
-            else 
+            else
             {
-               return  RedirectToAction("Index", "Admin");
-            }            
+                return RedirectToAction("Index", "Admin");
+            }
         }
-
 
         [Authorize(Roles = "admin")]
         public ActionResult NoUserEmail()
         {
             return View();
         }
-
-
-
 
         [Authorize(Roles = "admin")]
         [HttpGet]
@@ -279,36 +248,14 @@ namespace Forum_v1.Controllers
             return View();
         }
 
-
-
-
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<ActionResult> BanUser(string Id)
+        public async Task<ActionResult> BanUser(string id)
         {
-            ApplicationUser user = await _userManager.FindByIdAsync(Id);
+            _adminService.BanUserAsync(id);
 
-            if (user != null)
-            {
-                if (user.Ban == true)
-                {
-                    return RedirectToAction("Index", "Admin");
-                }
-
-                user.Ban = true;
-                await _userManager.UpdateAsync(user);
-
-                BanEmail banEmail = new BanEmail { Email = user.Email };
-
-                await _banRepo.CreateAsync(banEmail);
-
-                return RedirectToAction("Index", "Admin");
-            }
-
-            return RedirectToAction("CantBanUser", new { name = user.Email });
+            return RedirectToAction("Index", "Admin");
         }
-
-
 
         [Authorize(Roles = "admin")]
         public string CantBanUser(string name)
@@ -316,17 +263,11 @@ namespace Forum_v1.Controllers
             return "Не могу забанить пользователя:  " + name + "  Что-то пошло не так!";
         }
 
-
-
         [Authorize(Roles = "admin")]
         public string CantCancelBan(string email)
         {
             return "Не могу снять бан с пользователя:  " + email + "  Что-то пошло не так!";
         }
-
-
-
-
 
         [Authorize(Roles = "admin")]
         // GET: Admin
@@ -334,9 +275,6 @@ namespace Forum_v1.Controllers
         {
             return View(await _banRepo.GetAllAsync());
         }
-
-
-
 
         [Authorize(Roles = "admin")]
         // GET: Admin
